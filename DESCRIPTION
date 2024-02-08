@@ -1,0 +1,19 @@
+Package: soilgridr
+Maintainer: Emanuele Cordano <emanuele.cordano@gmail.com>
+License: GPL (>= 3) 
+Title: SoilGRid 250m R APIs
+Type: Package
+Author: Emanuele Cordano
+Description: It will download SoilGrids global maps at 250m resolution. See vignette and/or documentation for further details. 
+Version: 0.0.1
+Date: 20
+Repository: http://cran.r-project.org/
+Depends:
+    R (>= 2.10)
+Imports:
+    gdalUtilities,terra,magrittr,stringr,rlang
+Suggests:
+    stars
+URL: https://aquaknow.jrc.ec.europa.eu/node/18976
+RoxygenNote: 7.2.3
+
