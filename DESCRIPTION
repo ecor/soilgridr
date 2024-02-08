@@ -9,9 +9,9 @@ Version: 0.0.1
 Date: 20
 Repository: http://cran.r-project.org/
 Depends:
-    R (>= 2.10)
+    R (>= 4.0),rlang,gdalUtilities,terra
 Imports:
-    gdalUtilities,terra,magrittr,stringr,rlang
+    magrittr,stringr
 Suggests:
     stars
 URL: https://aquaknow.jrc.ec.europa.eu/node/18976
