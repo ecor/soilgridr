@@ -2,22 +2,56 @@
 % Please edit documentation in R/soil_texture_class.R
 \name{soil_texture_class}
 \alias{soil_texture_class}
-\title{Soil textura classes}
+\title{Soil textural classes}
 \usage{
-soil_texture_class(x = NULL, sand = "sand", clay = "clay", silt = "silt", ...)
+soil_texture_class(
+  x = NULL,
+  sand = "sand",
+  clay = "clay",
+  silt = "silt",
+  usda_classes,
+  usda_label = "label",
+  ...
+)
 }
 \arguments{
 \item{x}{input soil maps}
+
+\item{sand, clay, silt}{names for sand , clay and silt}
+
+\item{usda_classes}{data frame with soil USDA classes}
+
+\item{usda_label}{string column name in \code{usda_classes} with soil classes names}
+
+\item{...}{further argument for \code{\link{writeRaster}}}
 }
 \description{
-Soil textura classes
+Soil textural classes
 }
 \examples{
 
-library(terra)
-library(stars)
-olinda <-  rast(system.file('tif/olinda_dem_utm25s.tif',package="stars"))
-olinda_soilgrid_default_sand <- soilgridmap_from_vrt(olinda,voi="sand",align=TRUE,use_crop=TRUE)
+
+
+usda_soil_classes_csv <- system.file('ext_data/usda_classes.csv',package="soilgridr") 
+usda_soil_classes <- read.table(usda_soil_classes_csv,sep=",",header=TRUE)
+
+dem <-  rast(system.file('ext_data/vinschgau_elevation.tif',package="soilgridr"))
+filenamex <- "\%s/vischgau_05_15cm_\%s.tif" ##  /home/ecor/local/rpackages/jrc/soilgridr/inst/ext_data/vischgau_05_15cm_\%s.tif"
+soilm <- list()
+vois <- c("clay","sand","silt")
+for (voi in vois) {
+  filename <- filenamex \%>\% sprintf(system.file('ext_data',package="soilgridr"),voi)
+  if (file.exists(filename)) {
+    
+    soilm[[voi]] <- rast(filename)
+    
+  } else {
+    soilm[[voi]] <- soilgridmap_from_vrt(dem,voi=voi,align=TRUE,use_crop=TRUE,quantiles="mean",zl=c(5,15))
+  }
+}
+
+
+out <- soil_texture_class(soilm,usda_classes=usda_soil_classes)
 
 
 

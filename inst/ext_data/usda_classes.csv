@@ -1,0 +1,54 @@
+clay,sand,silt,label
+1,0,0,Clay
+0.55,0.45,0,Clay
+0.4,0.45,0.15,Clay
+0.4,0.2,0.4,Clay
+0.6,0,0.4,Clay
+0.55,0.45,0,Sandy Clay
+0.35,0.65,0,Sandy Clay
+0.35,0.45,0.2,Sandy Clay
+0.35,0.65,0,Sandy Clay Loam
+0.2,0.8,0,Sandy Clay Loam
+0.2,0.525,0.275,Sandy Clay Loam
+0.275,0.45,0.275,Sandy Clay Loam
+0.35,0.45,0.2,Sandy Clay Loam
+0.2,0.8,0,Sandy Loam
+0.15,0.85,0,Sandy Loam
+0,0.7,0.3,Sandy Loam
+0,0.5,0.5,Sandy Loam
+0.05,0.45,0.5,Sandy Loam
+0.05,0.525,0.425,Sandy Loam
+0.2,0.525,0.275,Sandy Loam
+0.15,0.85,0,Loamy Sand
+0.1,0.9,0,Loamy Sand
+0,0.85,0.15,Loamy Sand
+0,0.7,0.3,Loamy Sand
+0.1,0.9,0,Sand
+0,1,0,Sand
+0,0.85,0.15,Sand
+0.4,0.45,0.15,Clay Loam
+0.275,0.45,0.275,Clay Loam
+0.275,0.2,0.525,Clay Loam
+0.4,0.2,0.4,Clay Loam
+0.275,0.45,0.275,Loam
+0.2,0.525,0.275,Loam
+0.05,0.525,0.425,Loam
+0.05,0.45,0.5,Loam
+0.275,0.225,0.5,Loam
+0.275,0.225,0.5,Silt Loam
+0,0.5,0.5,Silt Loam
+0,0.2,0.8,Silt Loam
+0.125,0.075,0.8,Silt Loam
+0.125,0,0.875,Silt Loam
+0.275,0,0.725,Silt Loam
+0.6,0,0.4,Silty Clay
+0.4,0.2,0.4,Silty Clay
+0.4,0,0.6,Silty Clay
+0.4,0.2,0.4,Silty Clay Loam
+0.275,0.2,0.525,Silty Clay Loam
+0.275,0,0.725,Silty Clay Loam
+0.4,0,0.6,Silty Clay Loam
+0.125,0.075,0.8,Silt
+0,0.2,0.8,Silt
+0,0,1,Silt
+0.125,0,0.875,Silt

@@ -105,7 +105,7 @@ soilgridmap_from_vrt <- function(x,
     out <- out2
     if (use_crop) {
      
-     out <- crop(out,x,filename=filename,overwrite=overwrite)
+     out <- crop(out,y=x,filename=filename,overwrite=overwrite)
              
       
     }  

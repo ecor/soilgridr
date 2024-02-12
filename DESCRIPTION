@@ -6,12 +6,12 @@ Type: Package
 Author: Emanuele Cordano
 Description: It will download SoilGrids global maps at 250m resolution. See vignette and/or documentation for further details. 
 Version: 0.0.1
-Date: 20
+Date: 2024-02-13
 Repository: http://cran.r-project.org/
 Depends:
-    R (>= 4.0),rlang,gdalUtilities,terra
+    R (>= 4.0),rlang,gdalUtilities,terra,magrittr
 Imports:
-    magrittr,stringr
+    stringr,dplyr,data.table,sf
 Suggests:
     stars
 URL: https://aquaknow.jrc.ec.europa.eu/node/18976
