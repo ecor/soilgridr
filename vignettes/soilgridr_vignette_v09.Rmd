@@ -1,0 +1,166 @@
+---
+title: "SoilGrid250 Dataset in Lake Tanganyika Basin"
+author: "Emanuele Cordano"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{"SoilGrid250 Dataset in Lake Tanganyika Basin"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: bibliography.bib
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo=TRUE,
+  warning = FALSE
+)
+
+
+```
+
+## SoilGrid 
+
+SoilGridsTM (hereafter SoilGrids)(@Poggio2021) is a system for global digital soil mapping that uses state-of-the-art machine learning methods to map the spatial distribution of soil properties across the globe. SoilGrids prediction models are fitted using over 230 000 soil profile observations from the WoSIS database (@Batjes2020)and a series of environmental covariates. Covariates were selected from a pool of over 400 environmental layers from Earth observation derived products and other environmental information including climate, land cover and terrain morphology. The outputs of SoilGrids are global soil property maps at six standard depth intervals (according to the GlobalSoilMap IUSS working group and its specifications) at a spatial resolution of 250 meters. Prediction uncertainty is quantified by the lower and upper limits of a 90% prediction interval. The additional uncertainty layer displayed at soilgrids.org is the ratio between the inter-quantile range and the median. The SoilGrids maps are publicly available under the CC-BY 4.0 License.
+
+Maps of the following soil properties are available: pH, soil organic carbon content, bulk density, coarse fragments content, sand content, silt content, clay content, cation exchange capacity (CEC), total nitrogen as well as soil organic carbon density and soil organic carbon stock.
+
+For additional information please visit the SoilGrids FAQ page: 
+
+* https://www.isric.org/explore/soilgrids/faq-soilgrids
+
+
+## Lake Tanganika Basin (Downloading/Getting Data)
+
+
+The following lines of code defines the geographic context of Lake Tanaganyika Basin: 
+
+
+```{r basin_shp, fig.show='hold'}
+library(sf)
+library(magrittr)
+library(scales)
+
+basin <- "/home/ecor/local/rpackages/jrc/soilgridr/inst/ext_data/hybas_1071428650.shp" %>% st_read()
+
+basin
+
+```
+
+A raster with a defined lat/lon resolution with the same extent of the study area is created (@terraRpackage):
+
+```{r basin_grid, fig.show='hold'}
+library(terra)
+
+rr <- rast(basin,res=0.0025)
+rr
+
+```
+Than the soil map is downloaded via Webdav through the `soilgridmap_from_vrt` function. In tis shown example, the mean values of sand,clay and silt contents are downloaded. Downloading data can last several minutes, a condition of the existance file was put in order that the analyisis can be proceeded with already downloaded files (if present).    
+
+```{r soil_download, fig.show='hold',fig.width=10}
+library(soilgridr)
+#library(scales)
+#library(ggplot2)
+##
+library(stringr)
+library(rlang)
+library(gdalUtilities)
+##
+###source("/home/ecor/local/rpackages/jrc/soilgridr/R/soilgridmap.R")
+vois <- c("clay","silt","sand")
+out <- list()
+
+outfile <- "/home/ecor/local/rpackages/jrc/soilgridr/inst/ext_data/study_area_soil2_%s.tif"
+for (voi in vois) {
+  filename <- outfile %>% sprintf(voi)
+  if (!file.exists(filename)) {
+    out[[voi]] <- soilgridmap_from_vrt(rr,voi=voi,quantiles="mean",align=TRUE,use_crop=TRUE,filename=filename,overwrite=TRUE)
+  }  else {
+    out[[voi]] <- rast(filename)
+  }
+}
+
+out
+```
+
+Alternative, spatial coverages of SoilGrids datasets, can be retrieved through WCS (Web Coverege Service), through 'ows4R' R package (@ows4R) as drafted in this post: https://github.com/eblondel/ows4R/issues/115  (Issue Solved) .
+
+
+## Study Area (Visualization of Soil Texture Map at Specific Layers)
+
+Soil properties at a 30-60cm depth are plotted below:
+
+```{r soil_4layer, fig.show='hold',fig.height=5,fig.width=10}
+## Plotting the 4th layer (30-60 cm)
+outp <- lapply(X=out,FUN=function(x){x[[4]]}) %>% rast()  ## 4th layer (30-60 cm)
+library(ggplot2)
+library(tidyterra)
+cols <- brewer_pal(type="div",palette="RdYlGn",direction=-1)(10)
+gg <- ggplot()+geom_spatraster(data=outp)+facet_wrap(~lyr)+theme_bw()
+gg <- gg+scale_fill_gradientn(colors=cols,na.value="white")
+gg <- gg+geom_sf(data=basin,fill=NA,color=muted("blue"))
+gg
+
+
+```
+
+
+Intaractive map: 
+```{r soil_4layer_plet, fig.show='hold',fig.height=5,fig.width=10}
+
+##tiles <- "Esr
+##plet(vect(basin),fill=FALSE) 
+outp2 <- project(outp,y="epsg:3857",method="near")
+plet(outp2,names(outp2),tiles="OpenTopoMap") %>% lines(vect(basin))
+```
+```{r soil_4layer_RGB, fig.show='hold',fig.height=5,fig.width=10}
+
+
+outpr <- outp/sum(outp)
+
+
+
+####
+vm <- list()
+for (it in names(outpr)) {
+  
+  vm[[it]] <- which.max(outpr[[it]][])
+  
+}
+df <- data.frame(type=names(vm),i=unlist(vm))
+dc <- as.data.frame(t(outpr[df$i]))
+names(dc) <- c("r","g","b")
+df <- xyFromCell(outp,df$i) %>% cbind(df) %>% cbind(dc)
+df$color <- rgb(red=df$r,green=df$g,blue=df$b,maxColorValue=1) ##c("red","green","blue")
+#####
+gg <- ggplot()+geom_spatraster_rgb(data=outpr*255)+theme_bw()
+gg <- gg+geom_sf(data=basin,fill=NA,color="black")
+##gg <- gg+scale_color_manual(values=c("red","green","blue"),breaks=names(outpr),name="Legend")
+##gg <- gg+scale_color_manual(values=c("red","green","blue"),breaks=names(outpr),name="Legend")
+colors_ <- df$color
+names(colors_) <- df$type 
+
+gg <- gg+geom_point(aes(x=x,y=y,color=type),data=df,size=1,show.legend=TRUE)+scale_color_manual(values=colors_,breaks=df$type,name="Legend")
+
+
+gg
+
+
+```
+
+
+## References 
+
+
+```{r generateBibliography,echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,print=FALSE,results="hide"}
+
+require(knitcitations)
+cleanbib()
+options(citation_format="pandoc")
+read.bibtex(file = "bibliography.bib")
+
+
+```
+

@@ -4,16 +4,17 @@ License: GPL (>= 3)
 Title: SoilGRid 250m R APIs
 Type: Package
 Author: Emanuele Cordano
-Description: It will download SoilGrids global maps at 250m resolution. See vignette and/or documentation for further details. 
-Version: 0.0.1
-Date: 2024-02-13
+Description: It gets SoilGrids global maps at 250m resolution. See vignette and/or documentation for further details. 
+Version: 0.0.2
+Date: 2024-05-27
 Repository: http://cran.r-project.org/
 Depends:
     R (>= 4.0),rlang,gdalUtilities,terra,magrittr
 Imports:
     stringr,dplyr,data.table,sf
 Suggests:
-    stars
+    stars,knitr,ggplot2,knitcitations,scales,tidyterra
 URL: https://aquaknow.jrc.ec.europa.eu/node/18976
+VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 
