@@ -8,17 +8,17 @@ See vignettes and manual for further details.
 ## Intastallation from R console 
 
 ```
-remotes::install_github("ecor/lomomIDF")
+remotes::install_github("ecor/soilgridr")
 ```
 
 ## Usage from R console 
 
 ```
-library(lmomIDF)
+library(soilgridr)
 
-help(package="lmomIDF")
+help(package="soilgridr")
 
-help("annual.agg.idf.samlmu") 
+help("xxu") 
 
 ```
 
