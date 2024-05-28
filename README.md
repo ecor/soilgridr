@@ -4,7 +4,7 @@ An R package for getting [**SoilGrids**](https://soilgrids.org/) global maps at 
 
 See vignettes and manual for further details.
 
-## Intastallation from R console
+## Installation from R console
 
 ``` R
 remotes::install_github("ecor/soilgridr")
