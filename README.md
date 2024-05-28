@@ -1,24 +1,21 @@
 # soilgridr
-Lorem ipsum 
-An R package for creating (Precipitation) Intensity-Duration-Frequency Analysis and Variability with
-L-Moments from 'lmom', 
+
+An R package for getting [**SoilGrids**](https://soilgrids.org/) global maps at 250m resolution as **`terra::SpatRaster`** objects (common raster GIS format within a R session). See vignette and/or documentation for further details.
 
 See vignettes and manual for further details.
 
-## Intastallation from R console 
+## Intastallation from R console
 
-```
+``` R
 remotes::install_github("ecor/soilgridr")
 ```
 
-## Usage from R console 
+## Usage from R console
 
-```
+``` R
 library(soilgridr)
 
 help(package="soilgridr")
 
-help("xxu") 
-
+help("soilgridmap_from_vrt") 
 ```
-
