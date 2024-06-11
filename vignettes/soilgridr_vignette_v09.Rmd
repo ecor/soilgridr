@@ -1,10 +1,10 @@
 ---
-title: "SoilGrid250 Dataset in Lake Tanganyika Basin"
+title: "SoilGrid250 Dataset in a study case  geographical area"
 author: "Emanuele Cordano"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"SoilGrid250 Dataset in Lake Tanganyika Basin"}
+  %\VignetteIndexEntry{"SoilGrid250 Dataset in a study geographical area"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: bibliography.bib

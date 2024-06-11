@@ -16,5 +16,4 @@ Suggests:
     stars,knitr,ggplot2,knitcitations,scales,tidyterra
 URL: https://aquaknow.jrc.ec.europa.eu/node/18976
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
-
+RoxygenNote: 7.3.1
