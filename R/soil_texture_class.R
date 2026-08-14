@@ -51,11 +51,11 @@ soil_texture_class <- function(x=NULL,sand="sand",clay="clay",silt="silt",usda_c
   if (is.character(clay)) x$clay <- x[[clay]]
   if (is.character(clay)) x$silt <- x[[silt]]
   
-  x <- rast(x)
+  if (is.list(x)) x <- rast(x)
   
-  x <- x[[c("sand","clay","silt")]]
+  x <- x[[c(sand,clay,silt)]]
   
-  x <- x/sum(x)
+  x <- x/sum(x,na.rm=TRUE)
   nas <- min(is.na(x))
   x[nas] <- 1/3
   
