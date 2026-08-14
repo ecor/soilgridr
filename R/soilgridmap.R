@@ -7,7 +7,7 @@ NULL
 #' @param destdir directory where to write the SoilGrids output raw files.
 #' @param voi variable of interest. See options.
 #' @param zl soil layer depths (numeric)
-#' @param depths soil layer names as named in SoilGrid. See default.
+#' @param depths,ndepths soil layer names as named in SoilGrid and written in a 3-digit form. See default.
 #' @param quantiles quantile names. See default. 
 #' @param igh proj string for Homolosine projection. See SoilGRid documentation (URL below). 
 #' @param sg_url url prefix (directory) to vrt files.  See SoilGRid documentation (URL below). 
@@ -22,7 +22,7 @@ NULL
 #' @importFrom gdalUtilities gdal_translate
 #' @importFrom magrittr %>% 
 #' @importFrom terra rast ext crs project crop
-#' @importFrom stringr str_sub
+#' @importFrom stringr str_sub str_replace
 #' @importFrom rlang as_string ensym
 #' 
 #' @export
@@ -50,6 +50,7 @@ soilgridmap_from_vrt <- function(x,
                                  voi=c("bdod","cec","cfvo","clay","nitrogen","phh2o","sand","silt","soc","ocd","ocs")[4],
                                  zl=c(0,5,15,30,60,100,200),
                                  depths=sprintf("%d-%dcm",zl[-length(zl)],zl[-1]),
+                                 ndepths=sprintf("%03d-%03dcm",zl[-length(zl)],zl[-1]),
                                  quantiles=c("Q0.05","Q0.50","mean","Q0.95","Uncertainty")[c(-2,-5)],
                                  igh='+proj=igh +lat_0=0 +lon_0=0 +datum=WGS84 +units=m +no_defs',  # proj string for Homolosine projection
                                  sg_url="/vsicurl?max_retry=3&retry_delay=1&list_dir=no&url=https://files.isric.org/soilgrids/latest/data/",
@@ -85,7 +86,19 @@ soilgridmap_from_vrt <- function(x,
   }
   
   out <- rast(out)
-
+  #### added on 2026 08 14 
+  nn <- names(out)
+  names(depths) <- ndepths 
+  for (itnn in names(depths)) {
+    nn <- names(out)
+    nn <- str_replace(nn,depths[itnn],itnn)
+    names(out) <- nn
+    
+    
+  }
+  ##nn <- str_replace(nn,"0-5cm","00-05cm") |> str_replace("5-15cm","05-15cm")
+  ###names(out) <- nn  
+  ###
   if (align==TRUE) {
     
     ##nn_out <- names(out)
@@ -101,8 +114,14 @@ soilgridmap_from_vrt <- function(x,
     ###
     out2 <- project(out,y=x,align=align,method=method,filename=filename2,overwrite=overwrite,...)
     names(out2) <- names(out)
-       
+    
+    
+    
+     
     out <- out2
+    
+    
+    
     if (use_crop) {
      
      out <- crop(out,y=x,filename=filename,overwrite=overwrite)

@@ -11,6 +11,7 @@ soilgridmap_from_vrt(
     "ocd", "ocs")[4],
   zl = c(0, 5, 15, 30, 60, 100, 200),
   depths = sprintf("\%d-\%dcm", zl[-length(zl)], zl[-1]),
+  ndepths = sprintf("\%03d-\%03dcm", zl[-length(zl)], zl[-1]),
   quantiles = c("Q0.05", "Q0.50", "mean", "Q0.95", "Uncertainty")[c(-2, -5)],
   igh = "+proj=igh +lat_0=0 +lon_0=0 +datum=WGS84 +units=m +no_defs",
   sg_url =
@@ -32,7 +33,7 @@ soilgridmap_from_vrt(
 
 \item{zl}{soil layer depths (numeric)}
 
-\item{depths}{soil layer names as named in SoilGrid. See default.}
+\item{depths, ndepths}{soil layer names as named in SoilGrid and written in a 3-digit form. See default.}
 
 \item{quantiles}{quantile names. See default.}
 
