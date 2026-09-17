@@ -60,7 +60,7 @@ library(stars)
 olinda <-  rast(system.file('tif/olinda_dem_utm25s.tif',package="stars"))
 olinda_soilgrid_default_sand <- soilgridmap_from_vrt(olinda,voi="sand",align=TRUE)
 
-vinschgau <-  rast(system.file('ext_data/vinschgau_elevation.tif',package="soilgridr"))
+vinschgau <-  rast(system.file('ex/elev_vinschgau.tif',package="terra"))
 vinschgau_soilgrid_default_sand <- soilgridmap_from_vrt(vinschgau,voi="sand",align=TRUE,use_crop=TRUE)
 
 

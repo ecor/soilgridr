@@ -11,7 +11,7 @@ Repository: http://cran.r-project.org/
 Depends:
     R (>= 4.0),rlang,gdalUtilities,terra,magrittr
 Imports:
-    stringr,dplyr,data.table,sf
+    stringr,dplyr,data.table,sf,gstat
 Suggests:
     stars,knitr,ggplot2,knitcitations,scales,tidyterra
 URL: https://aquaknow.jrc.ec.europa.eu/node/18976

@@ -22,7 +22,7 @@ NULL
 #' usda_soil_classes_csv <- system.file('ext_data/usda_classes.csv',package="soilgridr") 
 #' usda_soil_classes <- read.table(usda_soil_classes_csv,sep=",",header=TRUE)
 #' 
-#' dem <-  rast(system.file('ext_data/vinschgau_elevation.tif',package="soilgridr"))
+#' dem <-  rast(system.file('ex/elev_vinschgau.tif', package="terra"))
 #' filenamex <- "%s/vischgau_05_15cm_%s.tif" 
 #' soilm <- list()
 #' vois <- c("clay","sand","silt")

@@ -39,7 +39,7 @@ NULL
 #' olinda <-  rast(system.file('tif/olinda_dem_utm25s.tif',package="stars"))
 #' olinda_soilgrid_default_sand <- soilgridmap_from_vrt(olinda,voi="sand",align=TRUE)
 #' 
-#' vinschgau <-  rast(system.file('ext_data/vinschgau_elevation.tif',package="soilgridr"))
+#' vinschgau <-  rast(system.file('ex/elev_vinschgau.tif',package="terra"))
 #' vinschgau_soilgrid_default_sand <- soilgridmap_from_vrt(vinschgau,voi="sand",align=TRUE,use_crop=TRUE)
 #' 
 #'
@@ -86,6 +86,10 @@ soilgridmap_from_vrt <- function(x,
   }
   
   out <- rast(out)
+  ## ADDED FILL 
+  ## HERE
+  
+  
   #### added on 2026 08 14 
   nn <- names(out)
   names(depths) <- ndepths 
@@ -128,6 +132,10 @@ soilgridmap_from_vrt <- function(x,
              
       
     }  
+    
+    ###
+    
+    ###
     
   }
   return(out)
